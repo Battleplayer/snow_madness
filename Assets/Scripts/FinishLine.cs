@@ -17,7 +17,9 @@ public class FinishLine : MonoBehaviour
     {
         if (other.tag == "Xander") {
             finishEffect.Play();
-           Invoke("ReloadScene", finishDelay);
+            GetComponent<AudioSource>().Play();
+            Invoke("ReloadScene", finishDelay);
+
         }
     }
 }

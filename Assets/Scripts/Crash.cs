@@ -7,6 +7,9 @@ public class Crash : MonoBehaviour
 {
     [SerializeField] ParticleSystem crashEffect;
     [SerializeField] float crashDelay = .5f;
+    [SerializeField] AudioClip crashSFX;
+    bool isDamaged = false;
+
 
     private void ReloadScene()
     {
@@ -15,8 +18,11 @@ public class Crash : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other) 
     {
-        if (other.tag == "Ground") {
+        if (other.tag == "Ground" && !isDamaged) {
+            isDamaged = true;
+            FindObjectOfType<PlayerController>().DisableControls();
             crashEffect.Play();
+            GetComponent<AudioSource>().PlayOneShot(crashSFX);
             Invoke("ReloadScene", crashDelay);
         }
     }
